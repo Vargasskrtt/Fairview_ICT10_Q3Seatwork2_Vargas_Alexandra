@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Intramural Sign Up</title>
+    <!-- this is where i imported the Russo One and Orbitron fonts from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Orbitron:wght@500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Orbitron', sans-serif; /* this is theFuturistic font for the whole page */
+            background-image: url('https://wallpaperaccess.com/full/385739.jpg'); /* the background image */
+            background-size: cover; /* this makes the background cover entire screen */
+            background-position: center; /* this centers the background */
+            color: white; /* it's the default text color */
+            text-align: center; /* Centers text */
+        }
+        header, footer {
+            background-color: white; /* Header and footer background color */
+            color: black; /* Text color inside header/footer */
+            padding: 15px; /* Space inside header/footer */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* Shadow effect */
+        }
+        header div {
+            display: flex; /* Flexbox to align the logo and title */
+            align-items: center; /* Vertically center items */
+            justify-content: space-between; /* Space between logo and title */
+        }
+        header img {
+            height: 70px; /* for the size of OBMC logo */
+            margin-left: 20px; /* Space from left edge */
+        }
+        header h1 {
+            flex: 1; /* this makes title take available space */
+            text-align: center; /* Centers title */
+            font-family: 'Russo One', sans-serif; /* Bold futuristic font */
+            font-size: 60px; /* Title size */
+            font-weight: bold; /* Bold text */
+            color: gold; /* Title color */
+            /* Softer glow for title */
+            text-shadow: 0 0 10px gold, 0 0 20px #FFD700;
+            margin: 0; /* Removes default margin */
+            letter-spacing: 3px; /* Space between letters */
+        }
+        .form-container {
+            margin: 50px auto; /* Centers form */
+            width: 50%; /* Form width */
+            background-color: white; /* Form background color */
+            padding: 20px; /* Space inside form */
+            border-radius: 10px; /* Rounded corners */
+            border: 6px solid; /* Border thickness */
+            border-image: linear-gradient(to right, yellow, green, blue, red) 1; /* Gradient border */
+        }
+        label {
+            display: block; /* Each label on its own line */
+            margin: 10px 0 5px; /* Space around labels */
+            font-weight: bold; /* Bold label text */
+            color: black; /* Label text color */
+        }
+        select {
+            font-family: 'Orbitron', sans-serif; /* another futuristic font */
+            padding: 8px; 
+            width: 80%; 
+            margin-bottom: 15px; 
+            border-radius: 5px; /* to add rounded corners */
+            border: 1px solid #ccc; /* Light gray border */
+        }
+        button {
+            padding: 12px 25px; /* Button size */
+            background: linear-gradient(to right, #FFF0B3, #FFB3B3, #B3FFB3, #B3D1FF); /* Pastel gradient */
+            border: none; /* No border */
+            border-radius: 8px; /* Rounded corners */
+            font-weight: bold; /* Bold text */
+            cursor: pointer; /* Pointer on hover */
+            color: black; /* Button text color */
+            font-size: 16px; /* Button text size */
+            transition: transform 0.2s; /* Smooth hover animation */
+            font-family: 'Orbitron', sans-serif; /* Futuristic font */
+        }
+        button:hover {
+            transform: scale(1.05); /* Button grows slightly on hover */
+        }
+        #result {
+            margin-top: 20px; /* Space above result */
+            font-size: 22px; /* Result text size */
+            font-weight: bold; /* Bold result text */
+            color: #333; /* Default result text color */
+        }
+        .ok { color: #00B894; } /* Green text for eligible */
+        .bad { color: #D63031; } /* Red text for not eligible */
+        .mascot {
+            max-width: 200px; /* Team logo size */
+            margin-top: 10px; /* Space above logo */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div>
+            <!-- OBMC logo on the left -->
+            <img src="https://images.squarespace-cdn.com/content/v1/664c7ae50eea9c731b37e817/8b5611eb-ff3a-407f-9adc-e116a23373fc/OBMC+LOGO+2024-04.png" alt="OBMC Logo">
+            <!-- Title in the center -->
+            <h1>Intramural Sign Up</h1>
+        </div>
+    </header>
+
+    <div class="form-container">
+        <!-- Form for the eligibility check -->
+        <form id="eligibilityForm">
+            <label>Confirmation of Intramurals online registration:</label>
+            <select name="registration" id="registration" required>
+                <option value="">--Select--</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+
+            <label>Confirmation of medical clearance:</label>
+            <select name="medical" id="medical" required>
+                <option value="">Select</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+
+            <label>Grade level:</label>
+            <select name="grade" id="grade" required>
+                <option value="">Select Grade</option>
+                <option value="7">Grade 7</option>
+                <option value="8">Grade 8</option>
+                <option value="9">Grade 9</option>
+                <option value="10">Grade 10</option>
+                <option value="11">Grade 11</option>
+            </select>
+
+            <label>Section:</label>
+            <select name="section" id="section" required>
+                <option value="">Select Section</option>
+                <option value="Emerald">Emerald</option>
+                <option value="Ruby">Ruby</option>
+                <option value="Sapphire">Sapphire</option>
+                <option value="Opaz">Opaz</option>
+                <option value="Jade">Jade</option>
+            </select>
+
+            <button type="submit">Check Eligibility</button>
+        </form>
+        <!-- Where the result will appear -->
+        <div id="result"></div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 School Intramurals</p>
+    </footer>
+
+    <script>
+        const teams = ["Blue Bears", "Red Bulldogs", "Yellow Tigers", "Green Hornets"]; // List of possible teams
+
+        // Event listener for form submission
+        document.getElementById('eligibilityForm').addEventListener('submit', function (e) {
+            e.preventDefault(); // this prevents the page to reload
+
+            // Get values from form
+            const registration = document.getElementById('registration').value.toLowerCase();
+            const medical = document.getElementById('medical').value.toLowerCase();
+            const gradeVal = document.getElementById('grade').value;
+            const section = document.getElementById('section').value;
+            const resultEl = document.getElementById('result');
+
+            // Eligibility logic
+            if (registration === "yes") {
+                if (medical === "yes") {
+                    if (gradeVal && Number(gradeVal) >= 7 && Number(gradeVal) <= 10) {
+                        const team = teams[Math.floor(Math.random() * teams.length)]; // Randomly pick a team
+                        let logo = "";
+
+                        // the logo based on team
+                        if (team === "Blue Bears") {
+                            logo = "https://txhslogoproject.com/wp-content/uploads/2019/03/White-Settlement-Brewer-Bears1-large.png";
+                        } else if (team === "Red Bulldogs") {
+                            logo = "https://img.freepik.com/premium-vector/red-black-bull-dog-mascot-logo_1014921-766.jpg";
+                        } else if (team === "Yellow Tigers") {
+                            logo = "https://png.pngtree.com/png-clipart/20250126/original/pngtree-tiger-head-logo-png-image_20040393.png";
+                        } else if (team === "Green Hornets") {
+                            logo = "https://insidepulse.com/wp-content/uploads/2020/08/Green-Hornet-logo.png";
+                        }
+
+                        // Show result with logo and star and "Have Fun!"
+                        resultEl.className = "ok";
+                        resultEl.innerHTML = `
+                            🎉 Congratulations! You are eligible to join the Intramurals.<br>
+                            Team: <strong>${team}</strong><br>
+                            Section: <strong>${section}</strong><br><br>
+                            <img src="${logo}" alt="${team} Logo" class="mascot"><br>
+                            <div style="margin-top:15px; display:flex; align-items:center; justify-content:center; gap:10px;">
+                                <img src="https://png.pngtree.com/png-vector/20240601/ourmid/pngtree-cartoon-character-with-origami-star-png-image_12575398.png" 
+                                     alt="Star Character" style="width:80px;"> <!-- Origami star image -->
+                                <span style="font-size:22px; font-weight:bold; color:gold; text-shadow:0 0 5px #FFD700;">Have Fun!</span> <!-- Text beside the star -->
+                            </div>
+                        `;
+                    } else {
+                        // Grade not in 7–10
+                        resultEl.className = "bad";
+                        resultEl.textContent = "❌ Only students in Grades 7–10 are eligible.";
+                    }
+                } else {
+                    // No medical clearance
+                    resultEl.className = "bad";
+                    resultEl.textContent = "❌ You must secure a medical clearance to join the Intramurals.";
+                }
+            } else {
+                // Not registered online
+                resultEl.className = "bad";
+                resultEl.textContent = "❌ You must register online to join the Intramurals.";
+            }
+        });
+    </script>
+</body>
+</html>
